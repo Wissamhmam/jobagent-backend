@@ -17,7 +17,8 @@ app.include_router(job_process_router)
 origins = [
     "http://localhost:3000",   # local frontend
     "https://jobagent-13245ux5z-hwissm-2040s-projects.vercel.app",  # Vercel frontend
-    "https://jobagent-6j1ypkq4t-hwissm-2040s-projects.vercel.app"
+    "https://jobagent-6j1ypkq4t-hwissm-2040s-projects.vercel.app",
+    "https://jobagent-gu4sw86o4-hwissm-2040s-projects.vercel.app"
 ]
 
 app.add_middleware(
