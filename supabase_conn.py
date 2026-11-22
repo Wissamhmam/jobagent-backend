@@ -1,7 +1,17 @@
-from supabase import create_client
 import os
 
-SUPABASE_URL = "https://niswbzgtmcpxilsqpgus.supabase.co"
-SUPABASE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im5pc3diemd0bWNweGlsc3FwZ3VzIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjQzMzc5OTAsImV4cCI6MjA3OTkxMzk5MH0.silYrN9KOoaaTLXmkS3mUrg2L9PZ9tmPcNMIaLZK70k"
+from dotenv import load_dotenv
+from supabase import create_client
+
+# Load a local .env file when present; production should inject environment variables.
+load_dotenv()
+
+SUPABASE_URL = os.getenv("SUPABASE_URL")
+SUPABASE_KEY = os.getenv("SUPABASE_KEY")
+
+if not SUPABASE_URL or not SUPABASE_KEY:
+    raise RuntimeError(
+        "SUPABASE_URL and SUPABASE_KEY must be configured in the environment."
+    )
 
 supabase = create_client(SUPABASE_URL, SUPABASE_KEY)
