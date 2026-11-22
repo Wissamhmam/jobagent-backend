@@ -46,14 +46,21 @@ source .venv/bin/activate
 pip install -r requirements.txt
 ```
 
-Configure the required provider credentials in environment variables before starting the service:
+Copy the example environment file and fill in your own project values:
 
-```env
-GROQ_API_KEY=your_groq_api_key
-OPENAI_API_KEY=your_openrouter_api_key
+```bash
+cp .env.example .env
 ```
 
-The current Supabase URL/key configuration is defined in `supabase_conn.py`. Move this configuration to environment variables before sharing or deploying the project, and never commit service-role credentials.
+On Windows PowerShell, use `Copy-Item .env.example .env`. The application loads local values with `python-dotenv`; production deployments should define the same variables in the hosting provider's environment configuration.
+
+Required variables:
+
+- `SUPABASE_URL` and `SUPABASE_KEY` — Supabase project URL and API key
+- `GROQ_API_KEY` — resume extraction
+- `OPENAI_API_KEY` — OpenRouter API key used by the OpenAI-compatible client
+
+Never commit a real `.env` file. Use only the least-privileged Supabase key appropriate for the backend and database policies.
 
 Start the API:
 
@@ -79,7 +86,6 @@ The repository includes a Render Blueprint in `render.yaml`. It installs `requir
 
 - The current CORS middleware allows all origins while also enabling credentials; restrict this to explicit trusted frontend origins before production use.
 - Resume files are saved using the uploaded filename under `storage/`; add safe filename handling, file type/size validation, and cleanup/retention controls before exposing uploads publicly.
-- Supabase configuration is currently hard-coded in the connection module and should be moved to environment variables.
 - The repository contains an empty `process_resume.py`; the active PDF extraction implementation is in `extract_resume.py`.
 - No automated test suite is currently documented.
 
